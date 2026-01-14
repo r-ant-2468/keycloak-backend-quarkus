@@ -1,0 +1,39 @@
+quarkus:
+  http:
+    root-path: /api
+    port: 8080
+  oidc:
+    application-type: service
+    authentication:
+      user-info-required: true
+    client-id: ${EVENT_APP_OIDC_CLIENT_ID:event-app}
+  hibernate-orm:
+    schema-management:
+      strategy: update
+"%prod":
+  quarkus:
+    oidc:
+      auth-server-url: ${EVENT_APP_OIDC_SERVER_URL}
+    datasource:
+      db-kind: postgresql
+      username: ${EVENT_APP_DB_USERNAME}
+      password: ${EVENT_APP_DB_PASSWORD}
+      jdbc:
+        url: ${EVENT_APP_DB_URL}
+"%dev":
+  quarkus:
+    keycloak:
+      devservices:
+        enabled: true
+        create-client: false
+        realm-path: dev-realm.json
+        image-name: quay.io/keycloak/keycloak:26.4.0
+        port: ${EVENT_APP_KEYCLOAK_PORT:8180}
+    datasource:
+      devservices:
+        port: ${EVENT_APP_PGPORT:5434}
+        username: quarkus
+        password: quarkus
+        volumes:
+          "./devdbdata": /var/lib/postgresql
+        image-name: postgres:18.1
