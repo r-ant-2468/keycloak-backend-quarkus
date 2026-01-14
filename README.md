@@ -4,20 +4,19 @@ This repository gives an example of RBAC protected endpoints, with user informat
 
 Devservices are configured to run Keycloak and the database when running locally in containers.
 
-## Running in dev mode
+## Running locally in dev mode
 
 ### Requirements:
 - JDK 25+
 - Docker
 
-
-### Run command:
+### Run application:
 
 ```shell script
 ./mvnw quarkus:dev
 ```
 
-This command will leave Quarkus running in the foreground listening on port 8080.
+This command runs Quarkus in the foreground listening on port 8080.
 
 Now open [OIDC dev UI](http://localhost:8080/api/q/dev-ui/quarkus-oidc/keycloak-provider). You will be asked to login into a _Single Page Application_. You can login as any of the users defined in the [users section](#example-users). After connecting, you can visit the [swagger ui](http://localhost:8080/api/q/swagger-ui/) to test endpoints of the application.
 
