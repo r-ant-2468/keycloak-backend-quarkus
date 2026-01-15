@@ -1,8 +1,8 @@
 # keycloak-backend-quarkus
 
-This repository gives an example of RBAC protected endpoints, with user information and roles loaded via a keycloak connection.
+This repository gives an example of RBAC protected endpoints, with user information and roles loaded via a Keycloak connection.
 
-Devservices are configured to run Keycloak and the database when running locally in containers.
+When run in dev mode, devservices for **Keycloak** (for Authorisation/Authentication) and **PostgreSQL** (to store application data) are configured to run as separate containers in parallel.
 
 ## Running locally in dev mode
 
@@ -35,7 +35,7 @@ Events can be of type `Emergency` or `Maintenance`
 
 ## Access
 
-Access to resources based on the different event types are managed by roles defined in keycloak.
+Access to resources based on the different event types are managed by roles defined in Keycloak.
 Keycloak configuration is defined in the following files:
 
 - [src/main/resources/dev-realm.json](src/main/resources/dev-realm.json) for `dev` mode
@@ -105,9 +105,9 @@ This is an example application. For production deployment, devservices cannot be
 These servers will need to be referenced in the [application.yaml](src/main/resources/application.yml) config file.
 
 
-## Detailed keycloak configuration notes
+## Detailed Keycloak configuration notes
 
-For understanding the setup of keycloak when run in dev mode, we need to inspect the json config file: [src/main/resources/dev-realm.json](src/main/resources/dev-realm.json).
+For understanding the setup of Keycloak when run in dev mode, we need to inspect the json config file: [src/main/resources/dev-realm.json](src/main/resources/dev-realm.json).
 
 ### Client configuration
 - `"publicClient": true` within a context of a spa application, a client secret is not safe within a browser. Therefore no secret is used and we define the client as public.
@@ -115,7 +115,7 @@ For understanding the setup of keycloak when run in dev mode, we need to inspect
 
 The client also configures `defaultClientScopes` which references client scopes defined in the config under the `clientScopes` array. 
 
-Client scopes contain mapping (`protocolMappers`) configuration of how certain information from keycloak can be accessed by the client. 
+Client scopes contain mapping (`protocolMappers`) configuration of how certain information from Keycloak can be accessed by the client. 
 
 A couple of key client scopes can be noted in the `defaultClientScopes` key:
 - `basic` client scope, containing a protocol mapper which references another mapper `"protocolMapper": "oidc-sub-mapper"`. This mapper allows the client to access the ID of the logged in user, which is also used as the Id of the user in the application database.
@@ -126,7 +126,7 @@ A couple of key client scopes can be noted in the `defaultClientScopes` key:
 - Client roles are configured in the `roles` array, defining the name, client and any composite roles (for the role hierarchy)
 
 ### Users
-- Users created during keycloak startup are configured in the `users` array, containing an array of users with personal information, credentials (`username` and `password`) and roles (`clientRoles`).
+- Users created during Keycloak startup are configured in the `users` array, containing an array of users with personal information, credentials (`username` and `password`) and roles (`clientRoles`).
 
 ## AI Usage
 No part of this repository may be used to train machine learning models or artificial intelligence without express written permission.
